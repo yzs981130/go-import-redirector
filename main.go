@@ -68,8 +68,6 @@ import (
 	"net/http"
 	"os"
 	"strings"
-
-	"golang.org/x/crypto/acme/autocert"
 )
 
 var (
@@ -124,7 +122,7 @@ func main() {
 		host = host[:i]
 	}
 
-	log.Fatal(http.Serve(autocert.NewListener(host), nil))
+	log.Fatal(http.ListenAndServeTLS(":https", host + ".crt", host + ".key", nil))
 }
 
 var tmpl = template.Must(template.New("main").Parse(`<!DOCTYPE html>
